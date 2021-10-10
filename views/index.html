@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/css/style.css" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+        body {
+            background: #F8F8F8;
+        }
+        
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        /*--------------------------------------------------------------
+    # Hero Section
+    --------------------------------------------------------------*/
+        /* Global */
+        
+        body {
+            font-family: "Merriweather", sans-serif;
+            background-color: #ebf2ff;
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+        
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        button {
+            border: none;
+            cursor: pointer;
+        }
+        
+        section {
+            margin: 4rem 0;
+        }
+        /* Custom */
+        
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        .navbar {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9fafc;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 9999;
+        }
+        
+        .navbar__brand {
+            width: 100px;
+        }
+        
+        .button__primary:hover {
+            background-position: right center;
+            /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .brand__logo {
+            width: 100%;
+        }
+        
+        .hero__container {
+            margin-top: .5rem;
+        }
+        
+        .hero__image__container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .hero__image__shape {
+            position: absolute;
+            right: 2;
+            height: 340px;
+            width: 300px;
+        }
+        
+        .hero__image__pattren {
+            height: 350px;
+            width: 320px;
+        }
+        
+        .hero__image {
+            position: absolute;
+            width: 100%;
+            right: auto;
+            left: auto;
+            z-index: 2;
+            top: 1rem;
+            height: 350px;
+            background-color: transparent;
+        }
+        
+        .hero__text {
+            font-size: 1rem;
+            line-height: 2.3rem;
+            color: #1d3557;
+            font-weight: 900;
+        }
+        
+        .text-lg {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            color: #1d3557;
+            font-weight: 900;
+        }
+        
+        .text-xl {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            color: #1d3557;
+            font-weight: 900;
+        }
+        
+        @media (min-width: 768px) {
+            .hide__mobile {
+                display: block !important;
+            }
+            .mobile__only {
+                display: none !important;
+            }
+            .hero__container {
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+            }
+            .hero__image {
+                margin-top: 4rem;
+                height: 500px;
+            }
+            .text-xl {
+                font-size: 1.875rem;
+                line-height: 2.25rem;
+            }
+            .hero__image__shape {
+                top: 5rem;
+                height: 450px;
+                width: 400px;
+            }
+            .hero__image__pattren {
+                margin-top: 7rem;
+                height: 450px;
+                width: 400px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+            .hero__image {
+                top: -50px;
+                height: 550px;
+            }
+            .hero__image__container {
+                width: 50%;
+            }
+            .hero__image__shape {
+                top: 3rem;
+                height: 520px;
+                width: 530px;
+            }
+            .hero__image__pattren {
+                margin-top: 3rem;
+                height: 550px;
+                width: 550px;
+            }
+            .navbar {
+                padding: 0 3rem;
+            }
+            .hero__text {
+                font-size: 3rem;
+                line-height: 1;
+            }
+            .text-xl {
+                font-size: 3rem;
+                line-height: 1;
+            }
+        }
+    </style>
+
+</head>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid m-2">
+            <!-- <a href="https://imgbb.com/"><img src="https://i.ibb.co/5WJd7mF/bot.png" alt="bot" border="0"></a> -->
+            <img src="https://i.ibb.co/WD0pLb3/head-logo.png" style="width: 150px; height: 50px;" alt="logo" class="brand__logo" />
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/views/login">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Teams</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <a href="/signup"><button type="button" class="btn" style="width: 120px; border-radius: 50px; background-color: #a4508b;
+                        background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;
+                        ">SignUp</button></a>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<body>
+    <!-- ======= Hero Section ======= -->
+    <main class="container">
+        <section class="hero__container">
+            <div class="hero__image__container">
+                <img src="https://i.ibb.co/G91thLV/hero-img.png" alt="hero-img" alt="hero image" class="hero__image" />
+                <img src="https://i.ibb.co/gyL0Bx0/imageonline-co-whitebackgroundremoved-1.png" alt="hero image shape" class="hero__image__shape" />
+                <img src="https://i.ibb.co/xHTzwnB/imageonline-co-whitebackgroundremoved.png" alt="hero image shape" class="hero__image__pattren" />
+            </div>
+            <div class="hero__description">
+                <h1 class="hero__text">
+                    College Enquiry ChatBot </h1>
+                <h4>
+                    A perfect guide to know everything about chatbot</h4>
+                <a href="/profile">
+                    <button type="button" class="btn" style="width: 200px; border-radius: 50px; background-color: #a4508b;
+                    background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;
+                    height: 45px;">Get Started</button>
+                </a>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script>
+</body>
+
+</html>

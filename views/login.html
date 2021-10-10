@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Server Auth</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+    <link rel="stylesheet" href="/public/css/style.css" />
+
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer></script>
+</head>
+
+<body class="d-flex justify-content-center p-5">
+    <main>
+        <section>
+            <div class="card">
+                <div class="card-header">
+                    <center>
+                        <img src="https://i.ibb.co/GFd6J8G/Login-amico.png" alt="Login-amico" border="0" style="height: 200px; width: 200px;"></a>
+                        <h3>Login Form</h3>
+                    </center>
+                </div>
+                <div class="card-body">
+                    <form id="login" class="card-body px-5 py-4">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label custom-field">Email address</label>
+                            <input type="email" name="login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                        </div>
+                        <p>Don't have an account ? <a href="/signup"> Sigup</a></p>
+                        <center><button type="submit" class="btn" style="width: 150px; height: 40px; border-radius: 50px; background-color: #a4508b;
+                            background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;
+                            ">LOGIN</button></center>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            var firebaseConfig = {
+                apiKey: "AIzaSyDCU41xicJBNTqrHQEjZ1b1c3SGNSikbpA",
+                authDomain: "chatbot-4b070.firebaseapp.com",
+                projectId: "chatbot-4b070",
+                storageBucket: "chatbot-4b070.appspot.com",
+                messagingSenderId: "459249214115",
+                appId: "1:459249214115:web:137c4dabfb2dcd8d7d9516",
+                measurementId: "G-FR157049VW"
+            }; // Initialize Firebase
+
+            firebase.initializeApp(firebaseConfig);
+
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+
+
+            document
+                .getElementById("login")
+                .addEventListener("submit", (event) => {
+                    event.preventDefault();
+                    const login = event.target.login.value;
+                    const password = event.target.password.value;
+
+                    firebase
+                        .auth()
+                        .signInWithEmailAndPassword(login, password)
+                        .then(({
+                            user
+                        }) => {
+                            return user.getIdToken().then((idToken) => {
+                                return fetch("/sessionLogin", {
+                                    method: "POST",
+                                    headers: {
+                                        Accept: "application/json",
+                                        "Content-Type": "application/json",
+                                        "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                                    },
+                                    body: JSON.stringify({
+                                        idToken
+                                    }),
+                                });
+                            });
+                        })
+                        .then(() => {
+                            return firebase.auth().signOut();
+                        })
+                        .then(() => {
+                            window.location.assign("/profile");
+                        });
+                    return false;
+                });
+
+
+        });
+    </script>
+    </main>
+</body>
+
+</html>

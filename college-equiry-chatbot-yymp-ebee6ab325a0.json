@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "college-equiry-chatbot-yymp",
+  "private_key_id": "ebee6ab325a0032a799eeda849827f348fdc0e9c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDZXiJdK2nv2aLn\nQDnEriQ2zE3H0FdZyaVxl6JSljAAaRde8PSkKIxLrAIObhedX/7DQw1zW7tbsF/C\nUBusNguge2oDPPnxAvE3oRMaQ7N+mqPVrs6am490FoHHE31rWHDa/jfKZO5YswdK\nuGYA07K68353vU4f8ZB7vM+vurNmJ9TV/YOO0u8rIeyoPZArTe5ppJfP2I2hL1nt\nxmRGPYuzYaDRzlAk0WhkoN/26UVsZa6qnY0eUF4YD/kdJICIpJeAVjyBBX8j7QR9\nie6XpTwurZUxAE8gGUfDche/Yb0Y6g0Ckpm7Nn6hsJr5pW8gKscv8jyhf/47bFZw\nkEXIOJMlAgMBAAECggEAJxz7+IFtHtpt6IhDTNucCxtAvL2F1lOFWHcVX6CEUzKV\n4MDheJ+OPTiepxuS1r/1DwxEAZfGUzWdyZCSJi8UcQR8G0iP3hkuMBklH5MCm7u2\nUudRaHso+VXqdNjSNuxzZEid3+bBB8dxPrYHLstpLCBQB7pR8kgMvGNJiODC0tTv\nmfb5TCa2MAzLWxJr8Qrka9//L02duyheLC/a6y3eolzRcmfsO1jvl0mZBp7+Ougp\nB0z/z5r68BoqQKrhXXmNV3zRBLqLqjEcNkCZWCcRWopROrFYkdE2d1KM6WfcdjDJ\n0gcMIOnyEd3yqLqytl/XlMeloFbUjnyDbvqSYLSF2QKBgQDxTOW96GK+Ya+lekVI\n2ZwCcCkKYTCkfpKR3iw3odSNIsAbS071nh4Oxke/rNrPfW3Ly1Nf+JRPdgBY2j32\nze/Ser4ps8sVLEzdjzgXlAaTyzeoCa9NZNNkZBcTbG6Q1Ws2iGDO9Ols15dDy38Q\nZkC3NfiePOROxwAWG0b7KiRrLQKBgQDmnAEppB2B4Lk01WTmpcp8Rjvi5CEGlPmL\nZsbMgEU+tTMUXcJkIbMFNkZR6j8n0CUcgMhCycs4LOkD/4PmghOW/nssmHQ7EoK+\nskHOZr85tkpK2J9UcoGYk3BOvw0S3+44/OnisqzYvoXOJgSPiSEWnzlk6Ou/Z0mw\nJaiEkSzi2QKBgQCAHI6hfD7oy16BIeClI/vjg38WprE3tIfG8ElTpBUAdeG+3AXo\n+/EDcRxo1LI7lWF04Ne8TXMYmRLoGb7qST455rcN1wpMjH+m5kImqo2vbCZ5jeLH\n2W8ujsF9q4UsWlMY2eFkH73K7s+9y84De/aCDyKXiMbCWH9gPU07To2VZQKBgQCE\nIEv2PMZ/PG9A2yblk4XxMBhtxgE6ES7s9OTgFHoYFJ+Agru2vSwhx1gA5PJscDBj\nJVIYGiAqPmj/Vm2PK2Xn9EREZ9Doa5GniuBzTqEvgscMHRMkwjqIXalSJNprvwtx\ncU7cCT1JLdfiJhwk1Q+1M2Mh8uXnk1k/6EOmOLt7+QKBgQDEpw64Pn20DLw/AUjA\nVcDcWiOQk4I9w/9PQTt/sJgOM1B85vBdjnfJp4A56xHwXdu/hzHIpXugGN/usrJ5\ngulYxciwQTJQ/sY6dmsgrhoMXZNu0sUdM68tdw8fpKuo7h6E7vi0a+d4uWzXLrO0\nlpH6F9MiEJxkSUNhb071RQ5R4g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "college-enquiry-chatbot@college-equiry-chatbot-yymp.iam.gserviceaccount.com",
+  "client_id": "107636317003335528933",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/college-enquiry-chatbot%40college-equiry-chatbot-yymp.iam.gserviceaccount.com"
+}
