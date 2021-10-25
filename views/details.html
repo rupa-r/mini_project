@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- Fontsawesome icons -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>Task Management App</title>
+</head>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid m-2">
+            <!-- <a href="https://imgbb.com/"><img src="https://i.ibb.co/5WJd7mF/bot.png" alt="bot" border="0"></a> -->
+            <img src="https://i.ibb.co/WD0pLb3/head-logo.png" style="width: 150px; height: 50px;" alt="logo" class="brand__logo" />
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/views/login">Docs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Teams</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <a href="/sessionLogout"> <button type="button" class="btn" style="border-radius: 50px;width: 120px; background-color:#a4508b; background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white; 
+                    height: 45px;">Log out</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<body>
+
+    <div class="card m-5">
+        <div class="card-header text-capitalize fw-bold" style="color: #5f0a87;">
+            <img src="data:image/jpeg;base64,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"
+                style="height: 220px; width: 100%;" class="card-img-top" alt="...">
+        </div>
+        <div class="card-body" style="margin-left: 50px; margin-right: 50px;">
+            <h2 style="color: #5f0a87;" class="fw-bold">S.A. Engineering College Courses & Fees 2022</h2>
+            <p class="card-text" style="color: #a4508b;"><i class="fa fa-map-marker-alt"></i> Thiruverkadu, Chennai | 3.6 Rating | Ask Questions</p>
+            <div class="d-flex justify-content-between">
+                <p>Private | NAAC Accreditation ( Grade 'A')| <b>Ranked 96</b> for Private Engineering by India Today 2021 +2 more</p>
+                <button class="btn" style="background-color:#a4508b; background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;"><i class="fa fa-download"></i> Brochure</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card container">
+        <div class="card-body d-flex justify-content-around">
+            <a href="#College-Info" target="_self">
+                <p>College Info </p>
+            </a>
+            <a href="#Courses&Fees" target="_self">
+                <p>Courses & Fees</p>
+            </a>
+            <a href="#Reviews" target="_self">
+                <p>Reviews</p>
+            </a>
+            <a href="#Courses&Fees" target="_self">
+                <p>Placements</p>
+            </a>
+            <a href="#Courses&Fees" target="_self">
+                <p>Cut-Offs</p>
+            </a>
+            <a href="#Courses&Fees" target="_self">
+                <p>Infrastructure</p>
+            </a>
+            <a href="#Courses&Fees" target="_self">
+                <p>Q&A</p>
+            </a>
+            <a href="#Courses&Fees" target="_self">
+                <p>Scholarships</p>
+            </a>
+        </div>
+    </div>
+    <br/>
+
+    <div class="card container" id="College-Info" class="#con">
+        <div class="card-body">
+            <p>Updated on Jun 21, 2020 </p>
+            <p>Aman verma <i class="fa fa-check-circle" style="color: green;"></i> </p>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Established </th>
+                        <td>1998</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Also Known As </th>
+                        <td>SAEC</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">City </th>
+                        <td colspan="2">Chennai</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Website </th>
+                        <td colspan="2"><a href=""> Go to website...</a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Accepted Exams </th>
+                        <td colspan="2">TNEA</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Popular Courses </th>
+                        <td colspan="2">B.E. / B.Tech , MBA/PGDM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ownership </th>
+                        <td colspan="2">Private</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total Courses </th>
+                        <td colspan="2">18 courses across 4 streams</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br/>
+
+    <div class="card container" id="Courses&Fees">
+        <div class="card-header"><b>
+            Showing 4 Programmes </b><br>Get fees, placement reviews, exams required, cutoff & eligibility for all courses. </div>
+        <div class="card-body d-flex justify-content-around">
+            <div class="card mb-3 m-3" style="max-width: 530px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+                <div class="card-header fw-bolder">
+                    MBA/PGDM (2 years)
+                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="small">No. of Courses<br/><span class="fs-5">1 Course (120 Seats)</span>
+                            </td>
+                            <td class="small">Exams <br/><span class="fs-5"> MAT CAT <br/>TANCET</span></td>
+                        </tr>
+
+                        <td scope="row" class="small">Total Fees
+                            <br/><span class="fs-5">₹ 35 K</span>
+                        </td>
+                        <td class="small">Median Salary
+                            <br/><span class="fs-5"> ₹ 3 LPA</span></td>
+                        </tr>
+
+                        <td scope="row" class="small">Ranked
+                            <br/><span class="fs-5">#273 Business Today</span>
+                        </td>
+                        <td class="small"> <button class="btn" style="background-color:#a4508b; background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;"><i class="fa fa-download"></i> Brochure</button>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card mb-3 m-3" style="max-width: 530px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+                <div class="card-header fw-bolder">
+                    B.E / B.Tech (3-4 years)
+                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="small">No. of Courses<br/><span class="fs-5">12 Course (780 Seats)</span>
+                            </td>
+                            <td class="small">Exams <br/><span class="fs-5"> TNEA</span></td>
+                        </tr>
+
+                        <td scope="row" class="small">Total Fees
+                            <br/><span class="fs-5">₹ 1.2L - 3.68 L</span>
+                        </td>
+                        <td class="small">Median Salary
+                            <br/><span class="fs-5"> ₹ 3.5 LPA</span></td>
+                        </tr>
+
+                        <td scope="row" class="small">Ranked
+                            <br/><span class="fs-5">__</span>
+                        </td>
+                        <td class="small"> <button class="btn" style="background-color:#a4508b; background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;"><i class="fa fa-download"></i> Brochure</button>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around">
+            <div class="card mb-3 m-3" style="max-width: 530px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+                <div class="card-header fw-bolder">
+                    MCA (2 years)
+                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="small">No. of Courses<br/><span class="fs-5">1 Course (60 Seats)</span>
+                            </td>
+                            <td class="small">Exams <br/><span class="fs-5"> TANCET</span></td>
+                        </tr>
+
+                        <td scope="row" class="small">Total Fees
+                            <br/><span class="fs-5">₹ 35 K</span>
+                        </td>
+                        <td class="small">Median Salary
+                            <br/><span class="fs-5"> ₹ 3 LPA</span></td>
+                        </tr>
+
+                        <td scope="row" class="small">Ranked
+                            <br/><span class="fs-5">__</span>
+                        </td>
+                        <td class="small"> <button class="btn" style="background-color:#a4508b; background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;"><i class="fa fa-download"></i> Brochure</button>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card mb-3 m-3" style="max-width: 530px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+                <div class="card-header fw-bolder">
+                    M.E./M.Tech (2 years)
+                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td scope="row" class="small">No. of Courses<br/><span class="fs-5">4 Course (72 Seats)</span>
+                            </td>
+                            <td class="small">Exams <br/><span class="fs-5"> GATE, TANCET</span></td>
+                        </tr>
+
+                        <td scope="row" class="small">Total Fees
+                            <br/><span class="fs-5">₹ 1 L</span>
+                        </td>
+                        <td class="small">Median Salary
+                            <br/><span class="fs-5"> ₹ 3 LPA</span></td>
+                        </tr>
+
+                        <td scope="row" class="small">Ranked
+                            <br/><span class="fs-5">__</span>
+                        </td>
+                        <td class="small"> <button class="btn" style="background-color:#a4508b; background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;"><i class="fa fa-download"></i> Brochure</button>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <br/>
+
+    <div class="card container" style="border: none;" id="Reviews">
+        <div class="card-body d-flex justify-content-around">
+            <img src="
+            https://i.ibb.co/NpTgb9w/Whats-App-Image-2021-10-16-at-6-46-34-PM.jpg" alt="" style="height: 100%; width: 800px;">
+        </div>
+
+    </div>
+
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
+
+</body>
+
+</html>

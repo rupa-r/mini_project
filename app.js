@@ -38,6 +38,18 @@ app.get("/signup", function(req, res) {
     res.render("signup.html");
 });
 
+app.get("/details", function(req, res) {
+    res.render("details.html");
+});
+
+app.get("/dashboard", function(req, res) {
+    res.render("dashboard.html");
+});
+
+app.get("/admin", function(req, res) {
+    res.render("admin.html");
+});
+
 app.get("/profile", function(req, res) {
     const sessionCookie = req.cookies.session || "";
 
@@ -95,6 +107,7 @@ app.use(function(req, res, next) {
 app.post('/send-msg', (req, res) => {
     runSample(req.body.MSG).then(data => {
         res.send({ Reply: data })
+        console.log(data);
     })
 })
 

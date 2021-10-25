@@ -11,62 +11,901 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+    <style>
+        /*--------------------
+Mixins
+--------------------*/
+        /*--------------------
+Body
+--------------------*/
+        
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+        
+        html,
+        body {
+            background: white;
+            background-size: cover;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            line-height: 1.3;
+            overflow: hidden;
+        }
+        
+        .bg {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            /* background: url("https://images.unsplash.com/photo-1451186859696-371d9477be93?crop=entropy&fit=crop&fm=jpg&h=975&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925") no-repeat 0 0; */
+            -webkit-filter: blur(80px);
+            filter: blur(80px);
+            -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+        /*--------------------
+Chat
+--------------------*/
+        
+        .chat {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 100vh;
+            max-height: 700px;
+            z-index: 2;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        /*--------------------
+Chat Title
+--------------------*/
+        
+        .chat-title {
+            flex: 0 1 45px;
+            position: relative;
+            z-index: 2;
+            background: white;
+            color: #fff;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 10px 10px 10px 50px;
+        }
+        
+        .chat-title h1,
+        .chat-title h2 {
+            font-weight: normal;
+            font-size: 10px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .chat-title h2 {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .chat-title .avatar {
+            position: absolute;
+            z-index: 1;
+            top: 8px;
+            left: 9px;
+            border-radius: 30px;
+            width: 30px;
+            height: 30px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            border: 2px solid rgba(255, 255, 255, 0.24);
+        }
+        
+        .chat-title .avatar img {
+            width: 100%;
+            height: auto;
+        }
+        /*--------------------
+Messages
+--------------------*/
+        
+        .messages {
+            flex: 1 1 auto;
+            color: rgba(255, 255, 255, 0.78);
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        
+        .messages .messages-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 101%;
+            width: 100%;
+            background-color: white;
+        }
+        
+        .messages .message {
+            clear: both;
+            float: left;
+            padding: 6px 10px 7px;
+            border-radius: 10px 10px 10px 0;
+            background: rgba(0, 0, 0, 0.3);
+            margin: 8px 0;
+            font-size: 11px;
+            line-height: 1.4;
+            margin-left: 35px;
+            position: relative;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+        
+        .messages .message .timestamp {
+            position: absolute;
+            bottom: -15px;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .messages .message::before {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            border-top: 6px solid rgba(0, 0, 0, 0.3);
+            left: 0;
+            border-right: 7px solid transparent;
+        }
+        
+        .messages .message .avatar {
+            position: absolute;
+            z-index: 1;
+            bottom: -15px;
+            left: -35px;
+            border-radius: 30px;
+            width: 30px;
+            height: 30px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            border: 2px solid rgba(255, 255, 255, 0.24);
+        }
+        
+        .messages .message .avatar img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .messages .message.message-personal {
+            float: right;
+            color: #fff;
+            text-align: right;
+            background: #5f0a87;
+            border-radius: 10px 10px 0 10px;
+        }
+        
+        .messages .message.message-personal::before {
+            left: auto;
+            right: 0;
+            border-right: none;
+            border-left: 5px solid transparent;
+            border-top: 4px solid #5f0a87;
+            bottom: -4px;
+        }
+        
+        .messages .message:last-child {
+            margin-bottom: 30px;
+        }
+        
+        .messages .message.new {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-animation: bounce 500ms linear both;
+            animation: bounce 500ms linear both;
+        }
+        
+        .messages .message.loading::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            content: '';
+            display: block;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #8a57cf;
+            z-index: 2;
+            margin-top: 4px;
+            -webkit-animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+            animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+            border: none;
+            -webkit-animation-delay: .15s;
+            animation-delay: .15s;
+        }
+        
+        .messages .message.loading span {
+            display: block;
+            font-size: 0;
+            width: 20px;
+            height: 10px;
+            position: relative;
+        }
+        
+        .messages .message.loading span::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            content: '';
+            display: block;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #8a57cf;
+            z-index: 2;
+            margin-top: 4px;
+            -webkit-animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+            animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+            margin-left: -7px;
+        }
+        
+        .messages .message.loading span::after {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            content: '';
+            display: block;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #8a57cf;
+            z-index: 2;
+            margin-top: 4px;
+            -webkit-animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+            animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
+            margin-left: 7px;
+            -webkit-animation-delay: .3s;
+            animation-delay: .3s;
+        }
+        /*--------------------
+Message Box
+--------------------*/
+        
+        .message-box {
+            flex: 0 1 40px;
+            width: 100%;
+            background: white;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .message-box .message-input {
+            background: none;
+            border: none;
+            outline: none !important;
+            resize: none;
+            color: black;
+            font-size: 16px;
+            height: 17px;
+            margin: 0;
+            padding-right: 20px;
+            width: 80%;
+        }
+        
+        .message-box textarea:focus:-webkit-placeholder {
+            color: transparent;
+        }
+        
+        .message-box .message-submit {
+            position: absolute;
+            z-index: 1;
+            top: 9px;
+            right: 40px;
+            width: 100px;
+            height: 30px;
+            color: #fff;
+            border: none;
+            background: #5f0a87;
+            font-size: 10px;
+            text-transform: uppercase;
+            line-height: 1;
+            padding: 6px 10px;
+            border-radius: 30px;
+            outline: none !important;
+            transition: background .2s ease;
+        }
+        
+        .message-box .message-submit:hover {
+            background: #8a57cf;
+        }
+        /*--------------------
+Custom Srollbar
+--------------------*/
+        
+        .mCSB_scrollTools {
+            margin: 1px -3px 1px 0;
+            opacity: 0;
+        }
+        
+        .mCSB_inside>.mCSB_container {
+            margin-right: 0px;
+            padding: 0 10px;
+        }
+        
+        .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+            background-color: rgba(0, 0, 0, 0.5) !important;
+        }
+        /*--------------------
+Bounce
+--------------------*/
+        
+        @-webkit-keyframes bounce {
+            0% {
+                -webkit-transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            4.7% {
+                -webkit-transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            9.41% {
+                -webkit-transform: matrix3d(0.883, 0, 0, 0, 0, 0.883, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.883, 0, 0, 0, 0, 0.883, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            14.11% {
+                -webkit-transform: matrix3d(1.141, 0, 0, 0, 0, 1.141, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.141, 0, 0, 0, 0, 1.141, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            18.72% {
+                -webkit-transform: matrix3d(1.212, 0, 0, 0, 0, 1.212, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.212, 0, 0, 0, 0, 1.212, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            24.32% {
+                -webkit-transform: matrix3d(1.151, 0, 0, 0, 0, 1.151, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.151, 0, 0, 0, 0, 1.151, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            29.93% {
+                -webkit-transform: matrix3d(1.048, 0, 0, 0, 0, 1.048, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.048, 0, 0, 0, 0, 1.048, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            35.54% {
+                -webkit-transform: matrix3d(0.979, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.979, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            41.04% {
+                -webkit-transform: matrix3d(0.961, 0, 0, 0, 0, 0.961, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.961, 0, 0, 0, 0, 0.961, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            52.15% {
+                -webkit-transform: matrix3d(0.991, 0, 0, 0, 0, 0.991, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.991, 0, 0, 0, 0, 0.991, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            63.26% {
+                -webkit-transform: matrix3d(1.007, 0, 0, 0, 0, 1.007, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.007, 0, 0, 0, 0, 1.007, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            85.49% {
+                -webkit-transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            100% {
+                -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+        }
+        
+        @keyframes bounce {
+            0% {
+                -webkit-transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            4.7% {
+                -webkit-transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.45, 0, 0, 0, 0, 0.45, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            9.41% {
+                -webkit-transform: matrix3d(0.883, 0, 0, 0, 0, 0.883, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.883, 0, 0, 0, 0, 0.883, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            14.11% {
+                -webkit-transform: matrix3d(1.141, 0, 0, 0, 0, 1.141, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.141, 0, 0, 0, 0, 1.141, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            18.72% {
+                -webkit-transform: matrix3d(1.212, 0, 0, 0, 0, 1.212, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.212, 0, 0, 0, 0, 1.212, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            24.32% {
+                -webkit-transform: matrix3d(1.151, 0, 0, 0, 0, 1.151, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.151, 0, 0, 0, 0, 1.151, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            29.93% {
+                -webkit-transform: matrix3d(1.048, 0, 0, 0, 0, 1.048, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.048, 0, 0, 0, 0, 1.048, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            35.54% {
+                -webkit-transform: matrix3d(0.979, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.979, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            41.04% {
+                -webkit-transform: matrix3d(0.961, 0, 0, 0, 0, 0.961, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.961, 0, 0, 0, 0, 0.961, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            52.15% {
+                -webkit-transform: matrix3d(0.991, 0, 0, 0, 0, 0.991, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.991, 0, 0, 0, 0, 0.991, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            63.26% {
+                -webkit-transform: matrix3d(1.007, 0, 0, 0, 0, 1.007, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1.007, 0, 0, 0, 0, 1.007, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            85.49% {
+                -webkit-transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(0.999, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+            100% {
+                -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+                transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            }
+        }
+        
+        @-webkit-keyframes ball {
+            from {
+                -webkit-transform: translateY(0) scaleY(0.8);
+                transform: translateY(0) scaleY(0.8);
+            }
+            to {
+                -webkit-transform: translateY(-10px);
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes ball {
+            from {
+                -webkit-transform: translateY(0) scaleY(0.8);
+                transform: translateY(0) scaleY(0.8);
+            }
+            to {
+                -webkit-transform: translateY(-10px);
+                transform: translateY(-10px);
+            }
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            overflow-y: hidden;
+            overflow-x: scroll;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        ul li {
+            display: inline;
+            background: #5f0a87;
+            padding: 4px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: cursive;
+        }
+        
+        .suggession {
+            position: absolute;
+            padding: 2px;
+            bottom: 0;
+            width: -webkit-fill-available;
+        }
+        
+        .fa-microphone {
+            font-size: 24px;
+            color: #5f0a87;
+            margin-left: 50px;
+            margin-top: 5px;
+        }
+        
+        #sihul li {
+            cursor: pointer;
+        }
+        /*===========================
+     CHAT BOOT MESSENGER
+   ===========================*/
+        
+        #Smallchat .Messages,
+        #Smallchat .Messages_list {
+            -webkit-box-flex: 1;
+            -webkit-flex-grow: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+        }
+        
+        .chat_close_icon {
+            cursor: pointer;
+            color: #fff;
+            font-size: 16px;
+            position: absolute;
+            right: 12px;
+            z-index: 9;
+        }
+        
+        .chat_on {
+            position: fixed;
+            z-index: 10;
+            width: 45px;
+            height: 45px;
+            right: 15px;
+            bottom: 20px;
+            background-color: #8a57cf;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            padding: 9px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)!important;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .chat_on_icon {
+            color: #fff;
+            font-size: 25px;
+            text-align: center;
+        }
+        /*
+#Smallchat,#Smallchat * {
+ box-sizing:border-box; 
+ -webkit-font-smoothing:antialiased;
+ -moz-osx-font-smoothing:grayscale;
+ -webkit-tap-highlight-color:transparent
+}
+*/
+        
+        #Smallchat .Layout {
+            pointer-events: auto;
+            box-sizing: content-box!important;
+            z-index: 999999999;
+            position: fixed;
+            bottom: 20px;
+            min-width: 50px;
+            max-width: 300px;
+            max-height: 30px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: end;
+            -webkit-justify-content: flex-end;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+            border-radius: 50px;
+            box-shadow: 5px 0 20px 5px rgba(0, 0, 0, .1);
+            -webkit-animation: appear .15s cubic-bezier(.25, .25, .5, 1.1);
+            animation: appear .15s cubic-bezier(.25, .25, .5, 1.1);
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+            opacity: 0;
+            -webkit-transition: right .1s cubic-bezier(.25, .25, .5, 1), bottom .1s cubic-bezier(.25, .25, .5, 1), min-width .2s cubic-bezier(.25, .25, .5, 1), max-width .2s cubic-bezier(.25, .25, .5, 1), min-height .2s cubic-bezier(.25, .25, .5, 1), max-height .2s cubic-bezier(.25, .25, .5, 1), border-radius 50ms cubic-bezier(.25, .25, .5, 1) .15s, background-color 50ms cubic-bezier(.25, .25, .5, 1) .15s, color 50ms cubic-bezier(.25, .25, .5, 1) .15s;
+            transition: right .1s cubic-bezier(.25, .25, .5, 1), bottom .1s cubic-bezier(.25, .25, .5, 1), min-width .2s cubic-bezier(.25, .25, .5, 1), max-width .2s cubic-bezier(.25, .25, .5, 1), min-height .2s cubic-bezier(.25, .25, .5, 1), max-height .2s cubic-bezier(.25, .25, .5, 1), border-radius 50ms cubic-bezier(.25, .25, .5, 1) .15s, background-color 50ms cubic-bezier(.25, .25, .5, 1) .15s, color 50ms cubic-bezier(.25, .25, .5, 1) .15s
+        }
+        
+        #Smallchat .Layout-right {
+            right: 20px
+        }
+        
+        #Smallchat .Layout-open {
+            overflow: hidden;
+            min-width: 300px;
+            max-width: 300px;
+            height: 500px;
+            max-height: 500px;
+            border-radius: 10px;
+            color: #fff;
+            -webkit-transition: right .1s cubic-bezier(.25, .25, .5, 1), bottom .1s cubic-bezier(.25, .25, .5, 1.1), min-width .2s cubic-bezier(.25, .25, .5, 1.1), max-width .2s cubic-bezier(.25, .25, .5, 1.1), max-height .2s cubic-bezier(.25, .25, .5, 1.1), min-height .2s cubic-bezier(.25, .25, .5, 1.1), border-radius 0ms cubic-bezier(.25, .25, .5, 1.1), background-color 0ms cubic-bezier(.25, .25, .5, 1.1), color 0ms cubic-bezier(.25, .25, .5, 1.1);
+            transition: right .1s cubic-bezier(.25, .25, .5, 1), bottom .1s cubic-bezier(.25, .25, .5, 1.1), min-width .2s cubic-bezier(.25, .25, .5, 1.1), max-width .2s cubic-bezier(.25, .25, .5, 1.1), max-height .2s cubic-bezier(.25, .25, .5, 1.1), min-height .2s cubic-bezier(.25, .25, .5, 1.1), border-radius 0ms cubic-bezier(.25, .25, .5, 1.1), background-color 0ms cubic-bezier(.25, .25, .5, 1.1), color 0ms cubic-bezier(.25, .25, .5, 1.1);
+        }
+        
+        #Smallchat .Layout-expand {
+            height: 500px;
+            min-height: 500px;
+            display: none;
+        }
+        
+        #Smallchat .Layout-mobile {
+            bottom: 10px
+        }
+        
+        #Smallchat .Layout-mobile.Layout-open {
+            width: calc(100% - 20px);
+            min-width: calc(100% - 20px)
+        }
+        
+        #Smallchat .Layout-mobile.Layout-expand {
+            bottom: 0;
+            height: 100%;
+            min-height: 100%;
+            width: 100%;
+            min-width: 100%;
+            border-radius: 0!important
+        }
+        
+        @-webkit-keyframes appear {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale(0);
+                transform: scale(0)
+            }
+            to {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1)
+            }
+        }
+        
+        @keyframes appear {
+            0% {
+                opacity: 0;
+                -webkit-transform: scale(0);
+                transform: scale(0)
+            }
+            to {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1)
+            }
+        }
+        
+        #Smallchat .Messenger_messenger {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            min-width: 300px;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column
+        }
+        
+        #Smallchat .Messenger_header,
+        #Smallchat .Messenger_messenger {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex
+        }
+        
+        #Smallchat .Messenger_header {
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-left: 10px;
+            padding-right: 40px;
+            height: 40px;
+            -webkit-flex-shrink: 0;
+            -ms-flex-negative: 0;
+            flex-shrink: 0
+        }
+        
+        #Smallchat .Messenger_header h4 {
+            opacity: 0;
+            font-size: 16px;
+            -webkit-animation: slidein .15s .3s;
+            animation: slidein .15s .3s;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards
+        }
+        
+        #Smallchat .Messenger_prompt {
+            margin: 0;
+            font-size: 16px;
+            line-height: 18px;
+            font-weight: 400;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis
+        }
+        
+        @-webkit-keyframes slidein {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateX(10px);
+                transform: translateX(10px)
+            }
+            to {
+                opacity: 1;
+                -webkit-transform: translateX(0);
+                transform: translateX(0)
+            }
+        }
+        
+        @keyframes slidein {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateX(10px);
+                transform: translateX(10px)
+            }
+            to {
+                opacity: 1;
+                -webkit-transform: translateX(0);
+                transform: translateX(0)
+            }
+        }
+        
+        #Smallchat .Messenger_content {
+            height: 450px;
+            -webkit-box-flex: 1;
+            -webkit-flex-grow: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            background-color: #fff;
+        }
+        
+        #Smallchat .Messages {
+            position: relative;
+            -webkit-flex-shrink: 1;
+            -ms-flex-negative: 1;
+            flex-shrink: 1;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #fff;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        #Smallchat .Input {
+            position: relative;
+            width: 100%;
+            -webkit-box-flex: 0;
+            -webkit-flex-grow: 0;
+            -ms-flex-positive: 0;
+            flex-grow: 0;
+            -webkit-flex-shrink: 0;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            padding-top: 17px;
+            padding-bottom: 15px;
+            color: #96aab4;
+            background-color: #fff;
+            border-top: 1px solid #e6ebea;
+        }
+        
+        #Smallchat .Input-blank .Input_field {
+            max-height: 20px;
+        }
+        
+        #Smallchat .Input_field {
+            width: 100%;
+            resize: none;
+            border: none;
+            outline: none;
+            padding: 0;
+            padding-right: 0px;
+            padding-left: 0px;
+            padding-left: 20px;
+            padding-right: 75px;
+            background-color: transparent;
+            font-size: 16px;
+            line-height: 20px;
+            min-height: 20px !important;
+        }
+        
+        #Smallchat .Input_button-emoji {
+            right: 45px;
+        }
+        
+        #Smallchat .Input_button {
+            position: absolute;
+            bottom: 15px;
+            width: 25px;
+            height: 25px;
+            padding: 0;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+        
+        #Smallchat .Input_button-send {
+            right: 15px;
+        }
+        
+        #Smallchat .Input-emoji .Input_button-emoji .Icon,
+        #Smallchat .Input_button:hover .Icon {
+            -webkit-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.1);
+            -webkit-transition: all .1s ease-in-out;
+            transition: all .1s ease-in-out;
+        }
+        
+        #Smallchat .Input-emoji .Input_button-emoji .Icon path,
+        #Smallchat .Input_button:hover .Icon path {
+            fill: #2c2c46;
+        }
+    </style>
 </head>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-        <div class="container-fluid m-2">
-            <!-- <a href="https://imgbb.com/"><img src="https://i.ibb.co/5WJd7mF/bot.png" alt="bot" border="0"></a> -->
-            <img src="https://i.ibb.co/WD0pLb3/head-logo.png" style="width: 150px; height: 50px;" alt="logo" class="brand__logo" />
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/views/login">Docs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Teams</a>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <a href="/sessionLogout"> <button type="button" class="btn" style="border-radius: 50px; background-color: #a4508b;
-                        background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;
-                        height: 45px;">Log out</button>
-                    </a>
-                </form>
-            </div>
-        </div>
-    </nav>
-</header>
 
 <body>
+
+
     <div class="chat">
-        <div class="chat-title card-header">
-            <h1>Smart BOt</h1>
-            <h2>i am customer support chat bot</h2>
-            <figure class="avatar">
-                <img src="/public/css/bot.png" /></figure>
+        <div class="chat-title card-header d-flex justify-content-between">
+            <img src="https://i.ibb.co/WD0pLb3/head-logo.png" style="width: 150px; height: 50px;" alt="logo" class="brand__logo" />
+            <a href="/sessionLogout"> <button type="button" class="btn" style="border-radius: 50px; background-color: #a4508b;
+                    background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;
+                    height: 45px; width: 120px; font-size: 14px; font-weight: 700;">Logout</button>
+            </a>
         </div>
         <div class="messages">
             <div class="messages-content"></div>
-            <div class="suggession">
-
-            </div>
         </div>
         <form class="message-box d-flex p-2" id="mymsg" method="POST">
             <input type="text" id="MSG" name="MSG" class="message-input p-4" style="background-color: rgb(211, 216, 214); border-radius: 50px;" placeholder="Type message..."> <i class="fas fa-microphone" id="start-record-btn"></i>
-            <button type="submit" class="message-submit">Send</button>
+            <button type="submit" class="message-submit" id="send">Send</button>
         </form>
         <h3 class="no-browser-support" hidden>Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In Google Chrome.</h3>
     </div>
-    <div class="bg"></div>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
     <script>
+        // CHAT BOOT MESSENGER////////////////////////
+
+
+        $(document).ready(function() {
+            $(".chat_on").click(function() {
+                $(".Layout").toggle();
+                $(".chat_on").hide(300);
+            });
+
+            $(".chat_close_icon").click(function() {
+                $(".Layout").hide();
+                $(".chat_on").show(300);
+            });
+
+        });
+
         var $messages = $('.messages-content');
         var serverResponse = "wala";
 
@@ -87,14 +926,14 @@
         recognition.onresult = (event) => {
             const speechToText = event.results[0][0].transcript;
             document.getElementById("MSG").value = speechToText;
-            //console.log(speechToText)
+            console.log(speechToText)
             insertMessage()
         }
 
 
         function listendom(no) {
             console.log(no)
-                //console.log(document.getElementById(no))
+            console.log(document.getElementById(no))
             document.getElementById("MSG").value = no.innerHTML;
             insertMessage();
         }
@@ -138,13 +977,13 @@
             if ($('.message-input').val() != '') {
                 return false;
             }
-            $('<div class="message loading new"><figure class="avatar"><img src="/public/css/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+            $('<div class="message loading new"><figure class="avatar"><img src="https://i.ibb.co/4tS9PzZ/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
             updateScrollbar();
 
 
             setTimeout(function() {
                 $('.message.loading').remove();
-                $('<div class="message new"><figure class="avatar"><img src="/public/css/bot.png" /></figure>' + response2 + '</div>').appendTo($('.mCSB_container')).addClass('new');
+                $('<div class="message new"><figure class="avatar"><img src="https://i.ibb.co/4tS9PzZ/bot.png" /></figure>' + response2 + '</div>').appendTo($('.mCSB_container')).addClass('new');
                 updateScrollbar();
             }, 100 + (Math.random() * 20) * 100);
 
@@ -173,9 +1012,17 @@
 
                 })
                 .catch(error => console.error('Error h:', error));
-
         }
     </script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js"></script>
+    <script type="module">
+        const firebaseConfig = { apiKey: "AIzaSyDxinPAxEc3jjfTM3XcsrtOuzrfQAU2dDk", authDomain: "chats-65733.firebaseapp.com", projectId: "chats-65733", storageBucket: "chats-65733.appspot.com", messagingSenderId: "977166112859", appId: "1:977166112859:web:8c6ef2c7450ebdfe7bc77e",
+        measurementId: "G-BHGTF9MHWP" }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app); const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app); const database = firebase.database(); var MSG; function
+        Ready(){ chats = document.getElementById('MSG').value; document.getElementById('send').onclick = function(){ Ready(); firebase.database().ref('chats-65733-default-rtdb').set({ Chats: MSG }); }}
+    </script>
+
 </body>
 
 </html>

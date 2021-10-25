@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- Fontsawesome icons -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>Task Management App</title>
+</head>
+
+<body style="background-color: #ebf3ff;" onload="loadExistingCards()">
+    <!-- Modal -->
+    <form method="get" action="profile.html">
+        <div class="modal fade" id="newTask" tabindex="-1" aria-labelledby="newTaskLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newTaskLabel">Add Task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="imageURL" class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="imageURL" placeholder="http://image.com/image.jpg">
+                        </div>
+                        <div class="mb-3">
+                            <label for="taskTitle" class="form-label">Task Title</label>
+                            <input type="text" class="form-control" id="taskTitle" placeholder="Web Development">
+                        </div>
+                        <div class="mb-3">
+                            <label for="taskType" class="form-label">Task Type</label>
+                            <input type="text" class="form-control" id="taskType" placeholder="Practice">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="addNewCard()" data-bs-dismiss="modal">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+            <div class="container-fluid">
+                <img src="https://i.ibb.co/WD0pLb3/head-logo.png" style="width: 150px; height: 50px;" alt="logo" class="brand__logo" />
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#newTask" style="border-radius: 50px; background-color: #a4508b;
+                        background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;
+                        height: 45px; width: 130px;"><i class="far fa-plus"></i> Add NEW</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <!-- Task Container -->
+        <section class="task__container row">
+        </section>
+    </main>
+
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script>
+        const taskContainer = document.querySelector(".task__container");
+        let globalTaskData = [];
+
+        const generateHTML = (taskData) =>
+            `
+            <div id=${taskData.id} class="col-md-6 col-lg-4 my-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-end gap-2">
+                    <button class="btn btn-outline-info"><i class="far fa-pencil"></i></button>
+                    <button class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                </div>
+                <div class="card-body">
+                    <img src=${taskData.image} alt="image" class="card-img">
+                    <h5 class="card-title mt-4">${taskData.title}</h5>
+                    <span class="badge bg-primary">${taskData.type}</span>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-outline-primary">Open Task</button>
+                </div>
+            </div>
+            </div>`;
+
+        const inserTODOM = (content) =>
+            taskContainer.insertAdjacentHTML('beforeend', content);
+
+        const addNewCard = () => {
+            const taskData = {
+                id: `${Date.now()}`,
+                title: document.getElementById("taskTitle").value,
+                image: document.getElementById("imageURL").value,
+                type: document.getElementById("taskType").value,
+            };
+
+
+            globalTaskData.push(taskData);
+            // update the local storage
+            localStorage.setItem("taskyCA", JSON.stringify({
+                card: globalTaskData
+            }));
+
+            // generate HTML code
+            const newCard = generateHTML(taskData);
+
+            // Inject it to DOM
+            inserTODOM(newCard);
+
+            // clear form
+            document.getElementById("taskTitle").value = "";
+            document.getElementById("imageURL").value = "";
+            document.getElementById("taskType").value = "";
+
+            return;
+            console.log(taskData);
+        };
+
+
+        const loadExistingCards = () => {
+            // check local storage
+            const getData = localStorage.getItem("taskyCA");
+
+            // parse JSON data, if exist
+            if (!getData) return;
+
+            const taskCards = JSON.parse(getData);
+            globalTaskData = taskCards.card;
+
+            globalTaskData.map((taskData) => {
+                // generate HTML code for those data
+                const newCard = generateHTML(taskData);
+
+                // inject to the DOM
+                inserTODOM(newCard);
+            });
+
+        };
+
+        const deleteCard = (e) => {};
+    </script>
+</body>
+
+</html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Page</title>
+    <title>Admin Login Page</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet" />
@@ -29,15 +29,14 @@
                 <div class="card-body">
                     <form id="login" class="card-body px-5 py-4">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label custom-field">Email address</label>
-                            <input type="email" name="login" class="form-control" id="email" aria-describedby="emailHelp" required>
+                            <label for="exampleInputEmail1" class="form-label custom-field">Username</label>
+                            <input type="email" class="form-control" id="username">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <input type="password" class="form-control" id="password">
                         </div>
-                        <p>Don't have an account ? <a href="/signup"> Sigup</a></p>
-                        <center><button type="submit" class="btn" style="width: 150px; height: 40px; border-radius: 50px; background-color: #a4508b;
+                        <center><button type="submit" onclick="getInfo()" class="btn" style="width: 150px; height: 40px; border-radius: 50px; background-color: #a4508b;
                             background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;
                             ">LOGIN</button></center>
                     </form>
@@ -47,43 +46,29 @@
     </main>
 
     <script>
-        window.addEventListener("DOMContentLoaded", () => {
-            var firebaseConfig = {
-                apiKey: "AIzaSyDCU41xicJBNTqrHQEjZ1b1c3SGNSikbpA",
-                authDomain: "chatbot-4b070.firebaseapp.com",
-                projectId: "chatbot-4b070",
-                storageBucket: "chatbot-4b070.appspot.com",
-                messagingSenderId: "459249214115",
-                appId: "1:459249214115:web:137c4dabfb2dcd8d7d9516",
-                measurementId: "G-FR157049VW"
-            }; // Initialize Firebase
+        var objPeople = [{
+                // Object @ index
+                username: "rupa",
+                password: "rupa"
+            }
 
-            firebase.initializeApp(firebaseConfig);
+        ]
 
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+        function getInfo() {
+            var username = document.getElementById('username').value
+            var password = document.getElementById('password').value
 
-
-            document
-                .getElementById("login")
-                .addEventListener("submit", (event) => {
-                    event.preventDefault();
-                    const login = event.target.login.value;
-                    const password = event.target.password.value;
-
-                    firebase
-                        .auth()
-                        .signInWithEmailAndPassword(login, password)
-                        .then(() => {
-                            window.location.assign("/profile");
-                            alert("logged in successfully")
-                        })
-                    return false;
-                });
-
-
-        });
+            for (var i = 0; i < objPeople.length; i++) {
+                // check is user input matches username and password of a current index of the objPeople array
+                if (username == objPeople[i].username && password == objPeople[i].password) {
+                    window.location.assign("/dashboard");
+                    // stop the function if this is found to be true
+                    return
+                }
+            }
+            console.log("incorrect username or password")
+        }
     </script>
-    </main>
 </body>
 
 </html>
