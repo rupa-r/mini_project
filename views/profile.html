@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ChatBot</title>
-    <!-- add icon link -->
-    <link rel="icon" href="/public/css/bot.png" type="image/x-icon">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.5.0/mdb.min.js"></script>
+
+    <title>Chatbot</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.min.css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     <style>
         /*--------------------
 Mixins
@@ -26,6 +28,10 @@ Body
         }
         
         html,
+        body {
+            height: 100%;
+        }
+        
         body {
             background: white;
             background-size: cover;
@@ -63,7 +69,7 @@ Chat
             z-index: 2;
             overflow: hidden;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
-            background: rgba(0, 0, 0, 0.5);
+            background: white;
             border-radius: 20px;
             display: flex;
             justify-content: space-between;
@@ -82,6 +88,8 @@ Chat Title
             text-transform: uppercase;
             text-align: left;
             padding: 10px 10px 10px 50px;
+            display: flex;
+            justify-content: space-between;
         }
         
         .chat-title h1,
@@ -134,7 +142,6 @@ Messages
             left: 0;
             height: 101%;
             width: 100%;
-            background-color: white;
         }
         
         .messages .message {
@@ -227,7 +234,7 @@ Messages
             width: 3px;
             height: 3px;
             border-radius: 50%;
-            background: #8a57cf;
+            background: rgba(255, 255, 255, 0.5);
             z-index: 2;
             margin-top: 4px;
             -webkit-animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
@@ -256,7 +263,7 @@ Messages
             width: 3px;
             height: 3px;
             border-radius: 50%;
-            background: #8a57cf;
+            background: rgba(255, 255, 255, 0.5);
             z-index: 2;
             margin-top: 4px;
             -webkit-animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
@@ -275,7 +282,7 @@ Messages
             width: 3px;
             height: 3px;
             border-radius: 50%;
-            background: #8a57cf;
+            background: rgba(255, 255, 255, 0.5);
             z-index: 2;
             margin-top: 4px;
             -webkit-animation: ball 0.45s cubic-bezier(0, 0, 0.15, 1) alternate infinite;
@@ -291,7 +298,7 @@ Message Box
         .message-box {
             flex: 0 1 40px;
             width: 100%;
-            background: white;
+            background: rgba(0, 0, 0, 0.3);
             padding: 10px;
             position: relative;
         }
@@ -301,8 +308,8 @@ Message Box
             border: none;
             outline: none !important;
             resize: none;
-            color: black;
-            font-size: 16px;
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 11px;
             height: 17px;
             margin: 0;
             padding-right: 20px;
@@ -317,9 +324,7 @@ Message Box
             position: absolute;
             z-index: 1;
             top: 9px;
-            right: 40px;
-            width: 100px;
-            height: 30px;
+            right: 10px;
             color: #fff;
             border: none;
             background: #5f0a87;
@@ -327,7 +332,7 @@ Message Box
             text-transform: uppercase;
             line-height: 1;
             padding: 6px 10px;
-            border-radius: 30px;
+            border-radius: 10px;
             outline: none !important;
             transition: background .2s ease;
         }
@@ -519,8 +524,6 @@ Bounce
         .fa-microphone {
             font-size: 24px;
             color: #5f0a87;
-            margin-left: 50px;
-            margin-top: 5px;
         }
         
         #sihul li {
@@ -865,49 +868,41 @@ Bounce
             fill: #2c2c46;
         }
     </style>
+
 </head>
 
 <body>
 
 
+
     <div class="chat">
-        <div class="chat-title card-header d-flex justify-content-between">
-            <img src="https://i.ibb.co/WD0pLb3/head-logo.png" style="width: 150px; height: 50px;" alt="logo" class="brand__logo" />
-            <a href="/sessionLogout"> <button type="button" class="btn" style="border-radius: 50px; background-color: #a4508b;
+        <div class="chat-title">
+            <div>
+                <img src="https://i.ibb.co/WD0pLb3/head-logo.png" style="height: 50px;" />
+            </div>
+            <div>
+                <a href="/login"><button type="button" class="btn" style="width: 120px; height: 40px; border-radius: 50px; background-color: #a4508b;
                     background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);color: white;
-                    height: 45px; width: 120px; font-size: 14px; font-weight: 700;">Logout</button>
-            </a>
+                    ">LOG OUT</button></a>
+            </div>
         </div>
         <div class="messages">
             <div class="messages-content"></div>
         </div>
-        <form class="message-box d-flex p-2" id="mymsg" method="POST">
-            <input type="text" id="MSG" name="MSG" class="message-input p-4" style="background-color: rgb(211, 216, 214); border-radius: 50px;" placeholder="Type message..."> <i class="fas fa-microphone" id="start-record-btn"></i>
-            <button type="submit" class="message-submit" id="send">Send</button>
+        <form class="message-box" id="mymsg" method="POST">
+            <input type="text" id="MSG" name="MSG" class="message-input" placeholder="Type message...">
+
+            <i class="fas fa-microphone" id="start-record-btn"></i>
+            <button type="submit" class="message-submit">Send</button>
         </form>
         <h3 class="no-browser-support" hidden>Sorry, Your Browser Doesn't Support the Web Speech API. Try Opening This Demo In Google Chrome.</h3>
     </div>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'></script>
     <script>
-        // CHAT BOOT MESSENGER////////////////////////
-
-
-        $(document).ready(function() {
-            $(".chat_on").click(function() {
-                $(".Layout").toggle();
-                $(".chat_on").hide(300);
-            });
-
-            $(".chat_close_icon").click(function() {
-                $(".Layout").hide();
-                $(".chat_on").show(300);
-            });
-
-        });
-
         var $messages = $('.messages-content');
         var serverResponse = "wala";
+
 
         var suggession;
         //speech reco
@@ -926,14 +921,14 @@ Bounce
         recognition.onresult = (event) => {
             const speechToText = event.results[0][0].transcript;
             document.getElementById("MSG").value = speechToText;
-            console.log(speechToText)
+            //console.log(speechToText)
             insertMessage()
         }
 
 
         function listendom(no) {
             console.log(no)
-            console.log(document.getElementById(no))
+                //console.log(document.getElementById(no))
             document.getElementById("MSG").value = no.innerHTML;
             insertMessage();
         }
@@ -941,7 +936,7 @@ Bounce
         $(window).load(function() {
             $messages.mCustomScrollbar();
             setTimeout(function() {
-                serverMessage("hello i am customer support bot type hi and i will show you quick buttons");
+                serverMessage("hello i am customer support bot type hi and i will show you quick buttions");
             }, 100);
 
         });
@@ -952,6 +947,8 @@ Bounce
                 timeout: 0
             });
         }
+
+
 
         function insertMessage() {
             msg = $('.message-input').val();
@@ -997,6 +994,7 @@ Bounce
             const data = new URLSearchParams();
             for (const pair of new FormData(document.getElementById("mymsg"))) {
                 data.append(pair[0], pair[1]);
+                // console.log(pair)
             }
 
             console.log("abc", data)
@@ -1012,16 +1010,10 @@ Bounce
 
                 })
                 .catch(error => console.error('Error h:', error));
+
         }
     </script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-database.js"></script>
-    <script type="module">
-        const firebaseConfig = { apiKey: "AIzaSyDxinPAxEc3jjfTM3XcsrtOuzrfQAU2dDk", authDomain: "chats-65733.firebaseapp.com", projectId: "chats-65733", storageBucket: "chats-65733.appspot.com", messagingSenderId: "977166112859", appId: "1:977166112859:web:8c6ef2c7450ebdfe7bc77e",
-        measurementId: "G-BHGTF9MHWP" }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app); const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app); const database = firebase.database(); var MSG; function
-        Ready(){ chats = document.getElementById('MSG').value; document.getElementById('send').onclick = function(){ Ready(); firebase.database().ref('chats-65733-default-rtdb').set({ Chats: MSG }); }}
-    </script>
+
 
 </body>
 
